@@ -22,9 +22,9 @@ namespace Codecool.LinkedList
         /// <param name="data">Value to be appended.</param>
         public void Add(T data)
         {
-            Link added = new Link(data);
-            added.next = _head;
-            _head = added;
+            Link added = new Link(data); 
+            added.next = _head; 
+            _head = added; 
             Size++;
         }
 
@@ -33,22 +33,23 @@ namespace Codecool.LinkedList
         /// </summary>
         /// <param name="index">Index of requested element.</param>
         /// <returns>Value of requested element.</returns>
-        public string Get(int index)
+        public T Get(int index)
         {
             if (index >= Size || index < 0)
             {
                 throw new IndexOutOfRangeException("Tried to get an invalid item!");
             }
 
-            int counter = 0;
+            var counter = 0;
             var currentNode = _head;
-            while (counter < index)
+
+            while (counter < (Size - 1 - index))
             {
                 currentNode = currentNode.next;
                 counter++;
             }
 
-            return currentNode.ToString();
+            return currentNode.data;
 
         }
 
@@ -62,20 +63,32 @@ namespace Codecool.LinkedList
         {
             if (index > Size || index < 0)
             {
-                throw new IndexOutOfRangeException("Tried to get an invalid item!");
+                throw new IndexOutOfRangeException("Tried to insert an invalid item!");
             }
 
-            int counter = 0;
-            var currentNode = _head;
-            while (counter < index)
+            if (Size == 0)
             {
-                currentNode = currentNode.next;
-                counter++;
+                Link added = new Link(data);
+                added.next = null;
+                _head = added;
+                Size++;
             }
+            else
+            {
+                var counter = 0;
+                var currentNode = _head;
 
-            currentNode.next.next = currentNode.next;
-            currentNode.data = data;
-            Size++;
+                while (counter < Size - 1 - index)
+                {
+                    currentNode = currentNode.next;
+                    counter++;
+                }
+
+                Link added = new Link(data);
+                added.next = currentNode.next;
+                currentNode.next = added;
+                Size++;
+            }
         }
 
         /// <summary>
@@ -85,28 +98,28 @@ namespace Codecool.LinkedList
         /// <param name="index">Index of element to be removed</param>
         public void Remove(int index)
         {
+            if (index >= Size || index < 0)
+            {
+                throw new IndexOutOfRangeException("Tried to remove an invalid item!");
+            }
+
             if (index == 0)
             {
-                _head = _head.next;
                 Size--;
-                return;
             }
-
-            var currentNode = _head;
-            var counter = 0;
-            while (counter < index - 1)
+            else
             {
-                currentNode = currentNode.next;
-                ++counter;
-
-                if (currentNode.next == null)
+                var currentNode = _head;
+                var counter = 0;
+                while (counter < Size - 1 - index)
                 {
-                    throw new IndexOutOfRangeException("Tried to remove an invalid item!");
+                    currentNode = currentNode.next;
+                    ++counter;
                 }
-            }
 
-            currentNode.next = currentNode.next.next;
-            Size--;
+                currentNode.next = currentNode.next.next;
+                Size--;
+            }
         }
 
         /// <summary>
@@ -114,18 +127,22 @@ namespace Codecool.LinkedList
         /// </summary>
         /// <param name="value">Value to search.</param>
         /// <returns>First index of elements equals to given value.</returns>
-        public int IndexOf(string value)
+        public int IndexOf(T value)
         {
-            var currentNode = _head;
-
-            for (int i = 0; i < Size; i++)
+            if (Size != 0)
             {
-                if (currentNode.data.ToString() == value)
-                {
-                    return i;
-                }
+                var counter = 0;
+                var currentNode = _head;
 
-                currentNode = currentNode.next;
+                while (currentNode.next != null)
+                {
+                    if (Equals(currentNode.data, value))
+                    {
+                        return Size - 1 - counter;
+                    }
+                    currentNode = currentNode.next;
+                    counter++;
+                }
             }
 
             return -1;

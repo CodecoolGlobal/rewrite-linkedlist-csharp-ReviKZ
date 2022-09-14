@@ -6,12 +6,12 @@ namespace Codecool.LinkedList.UnitTests
     [TestFixture]
     public class SinglyLinkedListTests
     {
-        private SinglyLinkedList _list;
+        private SinglyLinkedList<int> _list;
 
         [SetUp]
         public void Setup()
         {
-            _list = new SinglyLinkedList();
+            _list = new SinglyLinkedList<int>();
         }
 
         [Test]
