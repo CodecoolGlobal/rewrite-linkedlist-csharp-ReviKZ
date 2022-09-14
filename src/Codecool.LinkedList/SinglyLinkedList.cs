@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Codecool.LinkedList
 {
     /// <summary>
     /// Generic singly linked list implementation.
     /// </summary>
-    public class SinglyLinkedList
+    public class SinglyLinkedList<T>
     {
-        private Link _head;
+        private Link? _head;
 
         /// <summary>
         /// Gets the size of the list.
@@ -19,9 +20,12 @@ namespace Codecool.LinkedList
         /// The new element is appended to the current last item.
         /// </summary>
         /// <param name="data">Value to be appended.</param>
-        public void Add(int data)
+        public void Add(T data)
         {
-            throw new NotImplementedException();
+            Link added = new Link(data);
+            added.next = _head;
+            _head = added;
+            Size++;
         }
 
         /// <summary>
@@ -29,9 +33,23 @@ namespace Codecool.LinkedList
         /// </summary>
         /// <param name="index">Index of requested element.</param>
         /// <returns>Value of requested element.</returns>
-        public int Get(int index)
+        public string Get(int index)
         {
-            throw new NotImplementedException();
+            if (index >= Size || index < 0)
+            {
+                throw new IndexOutOfRangeException("Tried to get an invalid item!");
+            }
+
+            int counter = 0;
+            var currentNode = _head;
+            while (counter < index)
+            {
+                currentNode = currentNode.next;
+                counter++;
+            }
+
+            return currentNode.ToString();
+
         }
 
         /// <summary>
@@ -40,9 +58,24 @@ namespace Codecool.LinkedList
         /// </summary>
         /// <param name="index">Index of inserted element.</param>
         /// <param name="data">Value to be inserted.</param>
-        public void Insert(int index, int data)
+        public void Insert(int index, T data)
         {
-            throw new NotImplementedException();
+            if (index > Size || index < 0)
+            {
+                throw new IndexOutOfRangeException("Tried to get an invalid item!");
+            }
+
+            int counter = 0;
+            var currentNode = _head;
+            while (counter < index)
+            {
+                currentNode = currentNode.next;
+                counter++;
+            }
+
+            currentNode.next.next = currentNode.next;
+            currentNode.data = data;
+            Size++;
         }
 
         /// <summary>
@@ -54,7 +87,7 @@ namespace Codecool.LinkedList
         {
             if (index == 0)
             {
-                _head = _head.Next;
+                _head = _head.next;
                 Size--;
                 return;
             }
@@ -63,16 +96,16 @@ namespace Codecool.LinkedList
             var counter = 0;
             while (counter < index - 1)
             {
-                currentNode = currentNode.Next;
+                currentNode = currentNode.next;
                 ++counter;
 
-                if (currentNode.Next == null)
+                if (currentNode.next == null)
                 {
                     throw new IndexOutOfRangeException("Tried to remove an invalid item!");
                 }
             }
 
-            currentNode.Next = currentNode.Next.Next;
+            currentNode.next = currentNode.next.next;
             Size--;
         }
 
@@ -81,9 +114,21 @@ namespace Codecool.LinkedList
         /// </summary>
         /// <param name="value">Value to search.</param>
         /// <returns>First index of elements equals to given value.</returns>
-        public int IndexOf(int value)
+        public int IndexOf(string value)
         {
-            throw new NotImplementedException();
+            var currentNode = _head;
+
+            for (int i = 0; i < Size; i++)
+            {
+                if (currentNode.data.ToString() == value)
+                {
+                    return i;
+                }
+
+                currentNode = currentNode.next;
+            }
+
+            return -1;
         }
 
         /// <summary>
@@ -94,7 +139,32 @@ namespace Codecool.LinkedList
         /// <returns>String representation of LinkedList</returns>
         public override string ToString()
         {
-            throw new NotImplementedException();
+            if (Size == 0)
+            {
+                return "[]";
+            }
+
+            string returnString = "[";
+            int counter = 0;
+            var currentNode = _head;
+            while (counter < Size)
+            {
+                if (counter == Size - 1)
+                {
+                    returnString += currentNode.data;
+                    returnString += "]";
+                    counter++;
+                }
+                else
+                {
+                    returnString += currentNode.data;
+                    returnString += ", ";
+                    currentNode = currentNode.next;
+                    counter++;
+                }
+            }
+
+            return returnString;
         }
 
         private class Link
@@ -102,19 +172,31 @@ namespace Codecool.LinkedList
             /// <summary>
             /// Gets or sets the node data
             /// </summary>
-            public int Data { get; set; }
+            private T Data;
+
+            public T data
+            {
+                get { return Data; }
+                set { Data = value; }
+            }
 
             /// <summary>
             /// Gets or sets the next node reference
             /// </summary>
-            public Link Next { get; set; }
+            private Link? Next;
+            public Link? next
+            {
+                get { return Next;}
+                set { Next = value; }
+            }
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Link"/> class.
             /// </summary>
             /// <param name="data">Value to store</param>
-            public Link(int data)
+            public Link(T data)
             {
+                Next = null;
                 Data = data;
             }
 
@@ -122,6 +204,11 @@ namespace Codecool.LinkedList
             {
                 return Data.ToString();
             }
+        }
+
+        public SinglyLinkedList()
+        {
+            _head = null;
         }
     }
 }
