@@ -161,25 +161,22 @@ namespace Codecool.LinkedList
                 return "[]";
             }
 
-            string returnString = "[";
+            string returnString = "";
             int counter = 0;
             var currentNode = _head;
             while (counter < Size)
             {
-                if (counter == Size - 1)
-                {
-                    returnString += currentNode.data;
-                    returnString += "]";
-                    counter++;
-                }
-                else
-                {
-                    returnString += currentNode.data;
-                    returnString += ", ";
-                    currentNode = currentNode.next;
-                    counter++;
-                }
+                var currentString = "";
+                currentString += currentNode;
+                returnString = returnString.Insert(0, currentString + ", ");
+                currentNode = currentNode.next;
+                counter++;
             }
+
+            returnString = returnString.Insert(0, "[");
+            returnString = returnString.TrimEnd();
+            returnString = returnString.Remove(returnString.Length - 1);
+            returnString = returnString.Insert(returnString.Length, "]");
 
             return returnString;
         }
