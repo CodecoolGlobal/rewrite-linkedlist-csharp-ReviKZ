@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Codecool.LinkedList</name>
+    </assembly>
+    <members>
+        <member name="T:Codecool.LinkedList.Program">
+            <summary>
+            This is the main class of your program which contains Main method
+            </summary>
+        </member>
+        <member name="M:Codecool.LinkedList.Program.Main(System.String[])">
+            <summary>
+            This is the entry point of your program.
+            </summary>
+            <param name="args">Command line arguments.</param>
+        </member>
+        <member name="T:Codecool.LinkedList.SinglyLinkedList">
+            <summary>
+            Generic singly linked list implementation.
+            </summary>
+        </member>
+        <member name="P:Codecool.LinkedList.SinglyLinkedList.Size">
+            <summary>
+            Gets the size of the list.
+            </summary>
+        </member>
+        <member name="M:Codecool.LinkedList.SinglyLinkedList.Add(System.Int32)">
+            <summary>
+            Add a new element to the LinkedList.
+            The new element is appended to the current last item.
+            </summary>
+            <param name="data">Value to be appended.</param>
+        </member>
+        <member name="M:Codecool.LinkedList.SinglyLinkedList.Get(System.Int32)">
+            <summary>
+            Gives back a certain element at a requested index.
+            </summary>
+            <param name="index">Index of requested element.</param>
+            <returns>Value of requested element.</returns>
+        </member>
+        <member name="M:Codecool.LinkedList.SinglyLinkedList.Insert(System.Int32,System.Int32)">
+            <summary>
+            Inserts 'data' at 'index' into the list shifting elements if necessary.
+            e.g. the result of inserting 42 at index 3 into [0, 1, 2, 3, 4] is [0, 1, 2, 42, 3, 4]
+            </summary>
+            <param name="index">Index of inserted element.</param>
+            <param name="data">Value to be inserted.</param>
+        </member>
+        <member name="M:Codecool.LinkedList.SinglyLinkedList.Remove(System.Int32)">
+            <summary>
+            Deletes the element at 'index' from the list.
+            e.g. the result of deleting index 2 from [0, 1, 2, 3, 4] is [0, 1, 3, 4]
+            </summary>
+            <param name="index">Index of element to be removed</param>
+        </member>
+        <member name="M:Codecool.LinkedList.SinglyLinkedList.IndexOf(System.Int32)">
+            <summary>
+            Gives back the first index of the given value in the list.
+            </summary>
+            <param name="value">Value to search.</param>
+            <returns>First index of elements equals to given value.</returns>
+        </member>
+        <member name="M:Codecool.LinkedList.SinglyLinkedList.ToString">
+            <summary>
+            Gives back the string representation of the LinkedList
+            e.g. A LinkedList which contains the following elements: [2,5,543,21]
+            results the following string "[2, 5, 543, 21]"
+            </summary>
+            <returns>String representation of LinkedList</returns>
+        </member>
+        <member name="P:Codecool.LinkedList.SinglyLinkedList.Link.Data">
+            <summary>
+            Gets or sets the node data
+            </summary>
+        </member>
+        <member name="P:Codecool.LinkedList.SinglyLinkedList.Link.Next">
+            <summary>
+            Gets or sets the next node reference
+            </summary>
+        </member>
+        <member name="M:Codecool.LinkedList.SinglyLinkedList.Link.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Codecool.LinkedList.SinglyLinkedList.Link"/> class.
+            </summary>
+            <param name="data">Value to store</param>
+        </member>
+    </members>
+</doc>
